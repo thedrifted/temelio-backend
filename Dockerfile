@@ -1,8 +1,8 @@
 FROM openjdk:22-jdk-slim
 
-RUN apt-get update && apt-get install -y git maven
+WORKDIR /app
 
-RUN git clone git@github.com:thedrifted/temelio-backend.git .
+COPY ./backend /app
 
 RUN ./mvnw clean package -DskipTests
 
