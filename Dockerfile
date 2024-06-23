@@ -2,7 +2,7 @@ FROM openjdk:22-jdk-slim
 
 WORKDIR /app
 
-COPY ./backend /app
+COPY . .
 
 RUN ./mvnw clean package -DskipTests
 
