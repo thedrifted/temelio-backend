@@ -72,7 +72,7 @@ public class EmailManager {
         return emailLogsList.stream().map(emailLog -> {
             NonProfit nonProfit=nonProfitService.getNonProfitById(emailLog.getNonProfitId());
             return AllEmailDataDto.builder().nonProfitEmail(nonProfit.getEmail())
-                    .nonProfitAddress(nonProfit.getAddress()).nonProfitName(nonProfit.getName()).sentDate(nonProfit.getCreatedAt()).build();
+                    .nonProfitAddress(nonProfit.getAddress()).nonProfitName(nonProfit.getName()).sentDate(emailLog.getCreatedAt()).build();
         }).toList();
     }
 }
