@@ -12,4 +12,5 @@ public class AllEmailDataDto {
     private String nonProfitEmail;
     private String nonProfitAddress;
     private LocalDateTime sentDate;
+    private String body;
 }

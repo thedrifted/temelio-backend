@@ -7,6 +7,7 @@ import com.temelio_demo.demo.Entities.EmailLog;
 import com.temelio_demo.demo.Entities.Foundation;
 import com.temelio_demo.demo.Entities.NonProfit;
 import com.temelio_demo.demo.Exceptions.CustomException;
+import com.temelio_demo.demo.Handlers.ResendHandler;
 import com.temelio_demo.demo.Services.EmailLogService;
 import com.temelio_demo.demo.Services.FoundationService;
 import com.temelio_demo.demo.Services.NonProfitService;
@@ -56,7 +57,14 @@ public class EmailManager {
             return nonProfit;
         }).toList();
 
-        nonProfitList.forEach(nonProfit -> emailLogService.createdEmailLog(nonProfit,foundation,"Sending money to nonprofit {name} at address {address}","Donation"));
+
+        nonProfitList.forEach(nonProfit ->{
+            String body="Sending money to nonprofit {name} at address {address}".replace("{name}",nonProfit.getName());
+            body=body.replace("{address}",nonProfit.getAddress());
+            String subject="Donation";
+            ResendHandler.sendEmail(body,subject,foundation.getEmail(),nonProfit.getEmail());
+            emailLogService.createdEmailLog(nonProfit,foundation,"Sending money to nonprofit {name} at address {address}","Donation");
+        } );
     }
 
     public Object getAllEmails(){

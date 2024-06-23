@@ -23,8 +23,6 @@ public class EmailLogService {
     }
 
     public void createdEmailLog(NonProfit nonProfit, Foundation foundation,String body,String subject){
-        body=body.replace("{name}",nonProfit.getName());
-        body=body.replace("{address}",nonProfit.getAddress());
         EmailLog emailLog = new EmailLog(foundation.getId(),nonProfit.getId(),body,subject);
         emailLogDao.save(emailLog);
     }
