@@ -11,4 +11,5 @@ import java.util.List;
 public class SendEmailDto {
     private String foundationId;
     private List<String> nonProfitIds;
+    private String body;
 }

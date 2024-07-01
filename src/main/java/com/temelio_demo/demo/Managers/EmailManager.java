@@ -57,12 +57,13 @@ public class EmailManager {
             return nonProfit;
         }).toList();
 
-
+        String body=sendEmailDto.getBody();
         nonProfitList.forEach(nonProfit ->{
-            String body="Sending money to nonprofit {name} at address {address}".replace("{name}",nonProfit.getName());
-            body=body.replace("{address}",nonProfit.getAddress());
+            String newBody=body.replace("{email}",nonProfit.getEmail());
+            newBody=newBody.replace("{non-profit-name}",nonProfit.getName());
+            newBody=newBody.replace("{address}",nonProfit.getAddress());
             String subject="Donation";
-            ResendHandler.sendEmail(body,subject,foundation.getEmail(),nonProfit.getEmail());
+            ResendHandler.sendEmail(newBody,subject,foundation.getEmail(),nonProfit.getEmail());
             emailLogService.createdEmailLog(nonProfit,foundation,"Sending money to nonprofit {name} at address {address}","Donation");
         } );
     }
@@ -72,7 +73,7 @@ public class EmailManager {
         return emailLogsList.stream().map(emailLog -> {
             NonProfit nonProfit=nonProfitService.getNonProfitById(emailLog.getNonProfitId());
             return AllEmailDataDto.builder().nonProfitEmail(nonProfit.getEmail())
-                    .nonProfitAddress(nonProfit.getAddress()).nonProfitName(nonProfit.getName()).sentDate(emailLog.getCreatedAt()).build();
+                    .nonProfitAddress(nonProfit.getAddress()).nonProfitName(nonProfit.getName()).sentDate(emailLog.getCreatedAt()).body(emailLog.getBody()).build();
         }).toList();
     }
 }
